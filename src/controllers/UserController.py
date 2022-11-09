@@ -1,20 +1,17 @@
-from flask import Flask, jsonify, request
-from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
-from flask_bcrypt import Bcrypt
+from flask import Blueprint
+from init import db, ma, bcrypt, jwt
 from sqlalchemy.exc import IntegrityError
 from models.users import User
 
-db = SQLAlchemy()
-ma = Marshmallow()
-bcrypt = Bcrypt()
+users_bp = Blueprint('users',__name__, url_prefix='/auth')
 
+@users_bp.route('/register/ ')
 def auth_register():
     try:
         user = User(
             email = request.json('email'),
             name = request.json('name'),
-            password = bcrypt.generate_password_hash(request.json['password']).decode('utf8'),
+            password = bcrypt.generate_password_hash(request.json['password']).decode('utf-8'),
             age = request.json('age'),
             address = request.json('address'),
             city = request.json('city'),

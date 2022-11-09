@@ -1,11 +1,12 @@
 from flask import Flask 
+from flask_sqlalchemy import SQLAlchemy
+import os
 
-app = Flask(__name__)
+db = SQLAlchemy(app)
 
-@app.route('/')
-def index():
-    return 'hello world'
+def create_app():
+    app = Flask(__name__)
+    db.init_(app)
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
+    return app
 
-if __name__ == '__main__':
-    app.debug = True
-    app.run()

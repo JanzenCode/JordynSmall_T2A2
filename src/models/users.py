@@ -1,8 +1,5 @@
-from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
-
-db = SQLAlchemy(app)
-ma = Marshmallow(app)
+from init import db, ma
+from marshmallow import fields
 
 class User(db.Model):
     __tablename__ = 'Users'
